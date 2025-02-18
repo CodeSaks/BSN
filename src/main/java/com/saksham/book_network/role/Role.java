@@ -31,7 +31,7 @@ public class Role {
 
     @ManyToMany(mappedBy = "roles")
     @JsonIgnore
-    private List<User> users;
+    private List<User> user;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

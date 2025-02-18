@@ -19,6 +19,7 @@ public class Token {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    @Column(unique = true)
     private String token;
 
     private LocalDateTime createdAt;
@@ -26,6 +27,6 @@ public class Token {
     private LocalDateTime validatedAt;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "userId", nullable = false)
+    @JoinColumn(name = "userId", nullable = false)
     private User user;
 }
