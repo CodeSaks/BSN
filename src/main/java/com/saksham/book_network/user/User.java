@@ -1,5 +1,7 @@
 package com.saksham.book_network.user;
 
+import com.saksham.book_network.book.Book;
+import com.saksham.book_network.history.BookTransactionHistory;
 import com.saksham.book_network.role.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -32,6 +34,15 @@ public class User implements UserDetails, Principal {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Role> roles;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Book> books;
+
+    @OneToMany(mappedBy = "user")
+    private List<BookTransactionHistory> histories;
+
     private String firstName;
     private String lastName;
     private LocalDate dateOfBirth;
@@ -40,9 +51,6 @@ public class User implements UserDetails, Principal {
     private String email;
 
     private String password;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Role> roles;
 
     private boolean accountLocked;
     private boolean enabled;
