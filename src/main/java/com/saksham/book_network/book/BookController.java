@@ -1,13 +1,16 @@
 package com.saksham.book_network.book;
 
 import com.saksham.book_network.common.PageResponse;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.mail.Multipart;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.query.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
@@ -71,6 +74,22 @@ public class BookController {
     @PostMapping("/borrow/{book-id}")
     public ResponseEntity<UUID> borrowBook(@PathVariable("book-id") UUID bookId, Authentication connectedUser) {
         return ResponseEntity.ok(bookService.borrowBook(bookId, connectedUser));
+    }
+
+    @PatchMapping("/borrow/return/{book-id}")
+    public ResponseEntity<UUID> returnBorrowedBook(@PathVariable("book-id") UUID bookId, Authentication connectedUser) {
+        return ResponseEntity.ok(bookService.returnBorrowedBook(bookId, connectedUser));
+    }
+
+    @PatchMapping("/borrow/return/approve/{book-id}")
+    public ResponseEntity<UUID> approveReturnBorrowedBook(@PathVariable("book-id") UUID bookId, Authentication connectedUser) {
+        return ResponseEntity.ok(bookService.approveReturnBorrowedBook(bookId, connectedUser));
+    }
+
+    @PostMapping(value = "/cover/{book-id}", consumes = "multipart/form-data")
+    public ResponseEntity<?> uploadBookCoverPicture(@PathVariable("book-id") UUID bookId, @Parameter() @RequestPart MultipartFile file, Authentication connectedUser) {
+        bookService.uploadBookCoverPicture(bookId, file, connectedUser);
+        return ResponseEntity.accepted().build();
     }
 
 }

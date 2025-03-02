@@ -1,7 +1,10 @@
 package com.saksham.book_network.book;
 
+import com.saksham.book_network.file.FileUtils;
 import com.saksham.book_network.history.BookTransactionHistory;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BookMapper {
 
     public Book toBook(BookRequest bookRequest) {
@@ -27,7 +30,7 @@ public class BookMapper {
                 .archived(book.isArchived())
                 .shareable(book.isShareable())
                 .owner(book.getOwner().fullName())
-                //implement the cover
+                .cover(FileUtils.readFileFromLocation(book.getBookCover()))
                 .build();
     }
 

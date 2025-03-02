@@ -23,6 +23,9 @@ public class JwtService {
     @Value("${application.security.jwt.expiration}")
     private long jwtExpiration;
 
+    @Value("${application.file.uploads.photos-output-path}")
+    private String fileUploadPath;
+
     @Value("${application.security.jwt.secret-key}")
     private String secretKey;
 
